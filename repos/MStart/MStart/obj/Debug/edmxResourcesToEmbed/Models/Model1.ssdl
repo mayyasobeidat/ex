@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MStartModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_ID" Type="int" />
+    <Property Name="Server_DateTime" Type="datetime" />
+    <Property Name="DateTime_UTC" Type="datetime" />
+    <Property Name="Update_DateTime_UTC" Type="datetime" />
+    <Property Name="Account_Number" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Balance" Type="money" Nullable="false" />
+    <Property Name="Currency" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User_Table">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Server_DateTime" Type="datetime" />
+    <Property Name="DateTime_UTC" Type="datetime" />
+    <Property Name="Update_DateTime_UTC" Type="datetime" />
+    <Property Name="Username" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="First_Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Last_Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="Gender" Type="int" Nullable="false" />
+    <Property Name="Date_Of_Birth" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Account__User_ID__398D8EEE">
+    <End Role="User_Table" Type="Self.User_Table" Multiplicity="0..1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_Table">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="User_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MStartModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Table" EntityType="Self.User_Table" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Account__User_ID__398D8EEE" Association="Self.FK__Account__User_ID__398D8EEE">
+      <End Role="User_Table" EntitySet="User_Table" />
+      <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

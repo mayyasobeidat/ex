@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MStartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="User_Table">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Server_DateTime" Type="DateTime" Precision="3" />
+    <Property Name="DateTime_UTC" Type="DateTime" Precision="3" />
+    <Property Name="Update_DateTime_UTC" Type="DateTime" Precision="3" />
+    <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="First_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Last_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Gender" Type="Int32" Nullable="false" />
+    <Property Name="Date_Of_Birth" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Accounts" Relationship="MStartModel.FK__Account__User_ID__398D8EEE" FromRole="User_Table" ToRole="Account" />
+  </EntityType>
+  <EntityContainer Name="MStartEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="User_Table" EntityType="Self.User_Table" />
+    <EntitySet Name="Accounts" EntityType="MStartModel.Account" />
+    <AssociationSet Name="FK__Account__User_ID__398D8EEE" Association="MStartModel.FK__Account__User_ID__398D8EEE">
+      <End Role="User_Table" EntitySet="User_Table" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_ID" Type="Int32" />
+    <Property Name="Server_DateTime" Type="DateTime" Precision="3" />
+    <Property Name="DateTime_UTC" Type="DateTime" Precision="3" />
+    <Property Name="Update_DateTime_UTC" Type="DateTime" Precision="3" />
+    <Property Name="Account_Number" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Balance" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Currency" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User_Table" Relationship="MStartModel.FK__Account__User_ID__398D8EEE" FromRole="Account" ToRole="User_Table" />
+  </EntityType>
+  <Association Name="FK__Account__User_ID__398D8EEE">
+    <End Type="MStartModel.User_Table" Role="User_Table" Multiplicity="0..1" />
+    <End Type="MStartModel.Account" Role="Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_Table">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="User_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,155 @@
+﻿@model MStart.Models.Account
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<style>
+
+    h2 {
+        padding-top: 1rem;
+    }
+
+    a {
+        color: #333;
+    }
+
+        a:hover {
+            color: #435d7d;
+            text-decoration: none;
+        }
+
+    .card {
+        border: 0.40rem solid #f8f9fa;
+        top: 3%;
+    }
+
+    .form-control {
+        background-color: #f8f9fa;
+        margin-top: 1rem;
+    }
+
+        .form-control:focus {
+            color: #000000;
+            background-color: #ffffff;
+            border: 3px solid #435d7d;
+            outline: 0;
+            box-shadow: none;
+        }
+
+    .btn {
+        padding: 0.6rem 1.2rem;
+        background: #435d7d;
+        border: 2px solid #435d7d;
+    }
+
+    .btn-primary:hover {
+        background-color: #7da4d5;
+        border-color: #7da4d5;
+        transition: .3s;
+    }
+</style>
+
+
+@{
+    List<SelectListItem> GetStatusList()
+    {
+        List<SelectListItem> statusList = new List<SelectListItem>
+{
+            new SelectListItem { Value = "1", Text = "Active" },
+            new SelectListItem { Value = "2", Text = "Deleted" },
+            // Add more status options as needed
+        };
+
+        return statusList;
+    }
+
+    List<SelectListItem> GetCurrencyList()
+    {
+        List<SelectListItem> statusList = new List<SelectListItem>
+{
+            new SelectListItem { Value = "JD", Text = "JD" },
+            new SelectListItem { Value = "USD", Text = "USD" },
+            new SelectListItem { Value = "EUR", Text = "EUR" },
+            new SelectListItem { Value = "GBP", Text = "GBP" }
+
+            // Add more status options as needed
+        };
+
+        return statusList;
+    }
+}
+
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+
+
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-5 col-md-8">
+                <div class="card">
+                    <h2 class="card-title text-center">Account</h2>
+                    <div class="card-body py-md-4">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.DropDownList("User_ID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.User_ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.EditorFor(model => model.Account_Number, new { htmlAttributes = new { @class = "form-control", placeholder = "Account number (7 digits)" } })
+                            @Html.ValidationMessageFor(model => model.Account_Number, "", new { @class = "text-danger" })
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.EditorFor(model => model.Balance, new { htmlAttributes = new { @class = "form-control", placeholder = "Balance" } })
+                            @Html.ValidationMessageFor(model => model.Balance, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Currency, GetCurrencyList(), "Select Currency", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Currency, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Status, GetStatusList(), "Select Status", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                        </div><br />
+                        <div class="d-flex flex-row align-items-center justify-content-between">
+                            @Html.ActionLink("Back", "Index")
+
+                            <div class="d-flex flex-wrap align-items-center justify-content-end gap-1">
+                                <input type="submit" name="submitButton" value="Save" class="btn btn-primary" />
+                                <input type="submit" name="submitButton" value="Save & Continue" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+<br />
+
+
+
+
+
+
+
+
+
+
+
